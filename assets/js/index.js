@@ -31,10 +31,10 @@ const addNodes = (numNodes) => {
     }
 }
 
-const addEdges = () => {
+const addEdges = (edgeProb) => {
     cy.nodes().forEach(e1 => {
         cy.nodes().forEach(e2 => {
-            if (Math.random() > 0.75) {
+            if (Math.random() < edgeProb) {
                 cy.add({ group: 'edges', data: { id: `e${cy.edges().length}`, source: e1.data('id'), target: e2.data('id'), timestamp: Math.floor(Math.random() * 30) } })
             }
         })
@@ -42,7 +42,7 @@ const addEdges = () => {
 }
 
 addNodes(10)
-addEdges()
+addEdges(0.25)
 
 cy.center()
 cy.fit(padding = 100)
