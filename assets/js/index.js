@@ -61,6 +61,26 @@ const randomGraph = (numNodes = 10, edgeProb = 0.25) => {
     return graph
 }
 
-const cy = randomGraph()
+const dfs = (graph, startNode, visited = new Set()) => {
+    if (visited.has(startNode)) return
+    console.log(startNode)
+    visited.add(startNode)
+    neighbors = cy
+        .$(`#${startNode}`)
+        .neighborhood("edge")
+        .filter((e) => {
+            return (
+                e.data("source") == startNode && e.data("target") != startNode
+            )
+        })
+        .map((e) => {
+            return e.data("target")
+        })
+    neighbors.forEach((neighbor) => {
+        dfs(graph, neighbor, visited)
+    })
+}
+
+const cy = randomGraph(5)
 cy.center()
 cy.fit((padding = 100))
