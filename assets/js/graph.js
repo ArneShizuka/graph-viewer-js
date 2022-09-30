@@ -60,25 +60,31 @@ export class RandomGraph {
         this.graph.fit(100)
     }
 
-    dfs(startNode, visited = new Set()) {
-        if (visited.has(startNode)) return
-        let current = this.graph.$id(startNode)
-        current.style("background-color", "red")
-        console.log(startNode)
-        visited.add(startNode)
-        let neighbors = current
-            .neighborhood("edge")
-            .filter((e) => {
-                return (
-                    e.data("source") == startNode &&
-                    e.data("target") != startNode
-                )
+    dfs(startNode) {
+        let stack = [startNode]
+        let visited = new Set()
+
+        while (stack.length > 0) {
+            const current = stack.pop()
+            if (visited.has(current)) continue
+            visited.add(current)
+            let neighbors = this.graph
+                .$id(current)
+                .neighborhood("edge")
+                .filter((e) => {
+                    return (
+                        e.data("source") == current &&
+                        e.data("target") != current
+                    )
+                })
+                .map((e) => {
+                    return e.data("target")
+                })
+            neighbors.forEach((neighbor) => {
+                stack.push(neighbor)
             })
-            .map((e) => {
-                return e.data("target")
-            })
-        neighbors.forEach((neighbor) => {
-            this.dfs(neighbor, visited)
-        })
+        }
+
+        return Array.from(visited)
     }
 }
