@@ -93,10 +93,11 @@ export class RandomGraph {
         let visited = new Set()
 
         while (queue.length > 0) {
-            const current = this.graph.$id(queue.shift())
-            if (visited.has(current.id())) continue
-            visited.add(current.id())
-            let neighbors = current
+            const current = queue.shift()
+            if (visited.has(current)) continue
+            visited.add(current)
+            let neighbors = this.graph
+                .$id(current)
                 .neighborhood("edge")
                 .filter((e) => {
                     return (
