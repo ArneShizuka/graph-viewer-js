@@ -63,6 +63,7 @@ export class RandomGraph {
     dfs(startNode, visited = new Set()) {
         if (visited.has(startNode)) return
         let current = this.graph.$id(startNode)
+        current.style("background-color", "red")
         console.log(startNode)
         visited.add(startNode)
         let neighbors = current
