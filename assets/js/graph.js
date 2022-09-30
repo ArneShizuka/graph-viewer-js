@@ -87,4 +87,31 @@ export class RandomGraph {
 
         return Array.from(visited)
     }
+
+    bfs(startNode) {
+        let queue = [startNode]
+        let visited = new Set()
+
+        while (queue.length > 0) {
+            const current = this.graph.$id(queue.shift())
+            if (visited.has(current.id())) continue
+            visited.add(current.id())
+            let neighbors = current
+                .neighborhood("edge")
+                .filter((e) => {
+                    return (
+                        e.data("source") == current &&
+                        e.data("target") != current
+                    )
+                })
+                .map((e) => {
+                    return e.data("target")
+                })
+            neighbors.forEach((neighbor) => {
+                queue.push(neighbor)
+            })
+        }
+
+        return Array.from(visited)
+    }
 }
