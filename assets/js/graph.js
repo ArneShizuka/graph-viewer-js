@@ -114,4 +114,12 @@ export class RandomGraph {
 
         return Array.from(visited)
     }
+
+    renderVisit(visits) {
+        visits.forEach((node, index) => {
+            setTimeout(() => {
+                this.graph.$id(node).style("background-color", "red")
+            }, index * 1000)
+        })
+    }
 }
