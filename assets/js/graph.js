@@ -34,15 +34,6 @@ export class RandomGraph {
         this.graph.style(this.styleOptions)
     }
 
-    // addNodes(numNodes) {
-    //     for (let i = 0; i < numNodes; i++) {
-    //         this.graph.add({
-    //             group: "nodes",
-    //             data: { id: `n${i}` },
-    //             position: { x: Math.floor(i / 2) * 100, y: (i % 3) * 100 },
-    //         })
-    //     }
-    // }
     addNodes(nodes) {
         Array.from(nodes).forEach((node) => {
             this.graph.add({
@@ -52,23 +43,6 @@ export class RandomGraph {
         })
     }
 
-    // addEdges(edgeProb) {
-    //     this.graph.nodes().forEach((e1) => {
-    //         this.graph.nodes().forEach((e2) => {
-    //             if (Math.random() < edgeProb) {
-    //                 this.graph.add({
-    //                     group: "edges",
-    //                     data: {
-    //                         id: `e${this.graph.edges().length}`,
-    //                         source: e1.id(),
-    //                         target: e2.id(),
-    //                         timestamp: Math.floor(Math.random() * 30),
-    //                     },
-    //                 })
-    //             }
-    //         })
-    //     })
-    // }
     addEdges(adjList) {
         let edgeNum = 0
         for (let startNode in adjList) {

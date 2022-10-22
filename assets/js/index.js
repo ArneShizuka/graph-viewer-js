@@ -4,10 +4,6 @@ const graph = new RandomGraph()
 graph.buildGraph(5)
 window.graph = graph
 
-graph.graph.on("add", "node", (e) => {
-    graph.graph.layout(graph.layoutOptions).run()
-})
-
 document.getElementById("file").addEventListener("change", (e) => {
     let reader = new FileReader()
     reader.onload = (e) => {
