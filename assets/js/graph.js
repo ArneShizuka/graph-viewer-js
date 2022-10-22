@@ -2,62 +2,93 @@ export class RandomGraph {
     constructor() {
         this.graph = cytoscape({
             container: document.getElementById("cy"),
-            layout: { name: "preset" },
-            style: [
-                {
-                    selector: "node",
-                    style: {
-                        label: "data(id)",
-                    },
+        })
+
+        this.layoutOptions = {
+            name: "cose",
+            padding: 100,
+            randomize: true,
+            componentSpacing: 40,
+        }
+
+        this.styleOptions = [
+            {
+                selector: "node",
+                style: {
+                    label: "data(id)",
                 },
-                {
-                    selector: "edge",
-                    style: {
-                        label: "data(timestamp)",
-                        width: 3,
-                        "line-color": "#ccc",
-                        "target-arrow-color": "#ccc",
-                        "target-arrow-shape": "triangle",
-                        "curve-style": "bezier",
-                    },
+            },
+            {
+                selector: "edge",
+                style: {
+                    // label: "data(timestamp)",
+                    width: 3,
+                    "line-color": "#ccc",
+                    "target-arrow-color": "#ccc",
+                    "target-arrow-shape": "triangle",
+                    "curve-style": "bezier",
                 },
-            ],
+            },
+        ]
+
+        this.graph.style(this.styleOptions)
+    }
+
+    // addNodes(numNodes) {
+    //     for (let i = 0; i < numNodes; i++) {
+    //         this.graph.add({
+    //             group: "nodes",
+    //             data: { id: `n${i}` },
+    //             position: { x: Math.floor(i / 2) * 100, y: (i % 3) * 100 },
+    //         })
+    //     }
+    // }
+    addNodes(nodes) {
+        Array.from(nodes).forEach((node) => {
+            this.graph.add({
+                group: "nodes",
+                data: { id: node },
+            })
         })
     }
 
-    addNodes(numNodes) {
-        for (let i = 0; i < numNodes; i++) {
-            this.graph.add({
-                group: "nodes",
-                data: { id: `n${i}` },
-                position: { x: Math.floor(i / 2) * 100, y: (i % 3) * 100 },
+    // addEdges(edgeProb) {
+    //     this.graph.nodes().forEach((e1) => {
+    //         this.graph.nodes().forEach((e2) => {
+    //             if (Math.random() < edgeProb) {
+    //                 this.graph.add({
+    //                     group: "edges",
+    //                     data: {
+    //                         id: `e${this.graph.edges().length}`,
+    //                         source: e1.id(),
+    //                         target: e2.id(),
+    //                         timestamp: Math.floor(Math.random() * 30),
+    //                     },
+    //                 })
+    //             }
+    //         })
+    //     })
+    // }
+    addEdges(adjList) {
+        let edgeNum = 0
+        for (let startNode in adjList) {
+            Array.from(adjList[startNode]).forEach((endNode) => {
+                this.graph.add({
+                    group: "edges",
+                    data: {
+                        id: `e${edgeNum++}`,
+                        source: startNode,
+                        target: endNode,
+                    },
+                })
             })
         }
     }
 
-    addEdges(edgeProb) {
-        this.graph.nodes().forEach((e1) => {
-            this.graph.nodes().forEach((e2) => {
-                if (Math.random() < edgeProb) {
-                    this.graph.add({
-                        group: "edges",
-                        data: {
-                            id: `e${this.graph.edges().length}`,
-                            source: e1.id(),
-                            target: e2.id(),
-                            timestamp: Math.floor(Math.random() * 30),
-                        },
-                    })
-                }
-            })
-        })
-    }
-
-    buildGraph(numNodes = 10, edgeProb = 0.25) {
-        this.addNodes(numNodes)
-        this.addEdges(edgeProb)
-        this.graph.center()
-        this.graph.fit(100)
+    buildGraph(adjList) {
+        this.addNodes(Object.keys(adjList))
+        this.addEdges(adjList)
+        this.graph.layout(this.layoutOptions).run()
     }
 
     dfs(startNode) {
