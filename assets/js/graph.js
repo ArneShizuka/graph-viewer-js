@@ -1,4 +1,4 @@
-export class RandomGraph {
+export class DirectedGraph {
     constructor() {
         this.graph = cytoscape({
             container: document.getElementById("cy"),

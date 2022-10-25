@@ -1,6 +1,6 @@
-import { RandomGraph } from "./graph.js"
+import { DirectedGraph } from "./graph.js"
 
-const graph = new RandomGraph()
+const graph = new DirectedGraph()
 graph.buildGraph(5)
 window.graph = graph
 
