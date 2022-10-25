@@ -6,9 +6,9 @@ export class DirectedGraph {
 
         this.layoutOptions = {
             name: "cose",
-            padding: 100,
+            padding: 200,
             randomize: true,
-            componentSpacing: 40,
+            componentSpacing: 100,
         }
 
         this.styleOptions = [
@@ -90,7 +90,7 @@ export class DirectedGraph {
             })
         }
 
-        return Array.from(visited)
+        this.renderVisit(Array.from(visited))
     }
 
     bfs(startNode) {
@@ -118,7 +118,7 @@ export class DirectedGraph {
             })
         }
 
-        return Array.from(visited)
+        this.renderVisit(Array.from(visited))
     }
 
     renderVisit(nodes) {
