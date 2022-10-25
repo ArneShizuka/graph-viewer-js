@@ -1,10 +1,10 @@
 import { DirectedGraph } from "./graph.js"
 
 const graph = new DirectedGraph()
-graph.buildGraph(5)
 window.graph = graph
 
-document.getElementById("file").addEventListener("change", (e) => {
+const file = document.getElementById("file")
+file.addEventListener("change", (e) => {
     let reader = new FileReader()
     reader.onload = (e) => {
         let adjList = JSON.parse(e.target.result)
