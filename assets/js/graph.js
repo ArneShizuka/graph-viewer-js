@@ -127,5 +127,11 @@ export class DirectedGraph {
                 this.graph.$id(node).style("background-color", "red")
             }, index * 1000)
         })
+
+        nodes.forEach((node) => {
+            setTimeout(() => {
+                this.graph.$id(node).style("background-color", "#999999")
+            }, nodes.length * 1000)
+        })
     }
 }
